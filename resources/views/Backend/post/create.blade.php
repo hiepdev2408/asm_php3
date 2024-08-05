@@ -31,16 +31,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-xxl-6 col-md-6 mt-3 w-100">
-                                        <div>
-                                            <h6 class="fw-semibold">Người đăng</h6>
-                                            <select class="js-example-basic-single" name="user_id">
-                                                @foreach ($user as $id => $name)
-                                                    <option value="{{ $id }}">{{ $name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
 
                                     <div class="col-xxl-6 col-md-6 mt-3 w-100">
                                         <div>
@@ -105,7 +95,7 @@
                                                                 <select class="form-control" name="tags[]" id="tags" multiple>
                                                                     {{-- multiple sử dụng để chọn nhiều tags --}}
                                                                     @foreach ($tags as $id => $name)
-                                                                        <option value="{{ $id }}">{{ $name }}</option>
+                                                                        <option value="{{ $id }}">#{{ $name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>

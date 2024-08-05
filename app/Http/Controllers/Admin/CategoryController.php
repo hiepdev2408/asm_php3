@@ -14,35 +14,41 @@ class CategoryController extends Controller
     const PATH_VIEW = 'Backend.category.';
 
     const PATH_UPLOAD = 'category';
-    public function index(){
+    public function index()
+    {
         $data = Category::query()
-        ->with(['parent', 'children'])
-        ->latest('id')->get();
+            ->latest('id')
+            ->with(['parent', 'children'])
+            ->paginate(5);
 
         return view(self::PATH_VIEW . __FUNCTION__, compact('data'));
     }
 
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         $search = $request->input('search');
-        $parent = $request->input('parent_id');
-        $data = Category::where('name', 'like', '%'.$search.'%')
-        ->get();
+        $data = Category::where('name', 'like', '%' . $search . '%')
+            ->latest('id')
+            ->get();
 
         return view('Backend.category.index', compact('data', 'search'));
     }
 
-    public function create(){
+    public function create()
+    {
         $parentCategory = Category::query()->with('children')->whereNull('parent_id')->get();
 
         return view(self::PATH_VIEW . __FUNCTION__, compact('parentCategory'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $data = $request->except('image');
         $data['is_active'] ??= 0;
         $data['image'] ??= "";
+        // $data['image'] = $data['image'] ?? "";
 
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $data['image'] = Storage::put(self::PATH_UPLOAD, $request->file('image'));
         }
 
@@ -51,25 +57,28 @@ class CategoryController extends Controller
         return redirect()->route('admin.category.index');
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $model = Category::query()->findOrFail($id);
 
         return view(self::PATH_VIEW . __FUNCTION__, compact('model'));
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $model = Category::query()->with('parent')->findOrFail($id);
 
         return view(self::PATH_VIEW . __FUNCTION__, compact('model'));
     }
 
-    public function update(Request $request, string $id){
+    public function update(Request $request, string $id)
+    {
         $model = Category::query()->with('parent')->findOrFail($id);
         $data = $request->except('image');
         $data['is_active'] ??= 0;
 
 
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $data['image'] = Storage::put(self::PATH_UPLOAD, $request->file('image'));
         }
 
@@ -77,19 +86,20 @@ class CategoryController extends Controller
 
         $model->update($data);
 
-        if($request->hasFile('image') &&  $currentImage && $request->exists('image')){
+        if ($request->hasFile('image') &&  $currentImage && $request->exists('image')) {
             Storage::delete($currentImage);
         }
 
         return back();
     }
 
-    public function destroy(string $id){
+    public function destroy(string $id)
+    {
         $model = Category::query()->with('parent')->findOrFail($id);
 
         $model->delete();
 
-        if($model->image && Storage::exists($model->image)){
+        if ($model->image && Storage::exists($model->image)) {
             Storage::delete($model->image);
         }
 

@@ -27,6 +27,7 @@
                                 <th>Is hot</th>
                                 <th>Is show home</th>
                                 <th>Is New</th>
+                                <th>hashtag</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
                                 <th>Action</th>
@@ -43,8 +44,16 @@
                                     </th>
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->name }}</td>
-                                    <td>{{ $item->image }}</td>
-                                    <td>{{ $item->user->name }}</td>
+                                    <td>
+                                        <img src="{{ Storage::url($item->image) }}" width="100px" alt="">
+                                    </td>
+                                    <td>
+                                        <ul>
+                                            <li>{{ $item->user->name }}</li>
+                                            <li>{{ $item->user->email }}</li>
+                                            <li><span class="badge text-bg-success">{{ $item->user->type }}</span></li>
+                                        </ul>
+                                    </td>
                                     <td>{{ $item->category->name }}</td>
                                     <td>{!! $item->is_active
                                         ? '<span class="badge text-bg-primary">Hoạt động</span>'
@@ -58,6 +67,11 @@
                                     <td>{!! $item->is_new
                                         ? '<span class="badge text-bg-warning">Hoạt động</span>'
                                         : '<span class="badge text-bg-secondary">Chờ duyệt</span>' !!}</td>
+                                    <td>
+                                        @foreach ($item->tags as $tag)
+                                            <span class="badge text-bg-secondary">{{ $tag->name }}</span>
+                                        @endforeach
+                                    </td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>{{ $item->updated_at }}</td>
                                     <td>
@@ -70,7 +84,7 @@
                                                 <li><a href="{{ route('admin.post.show', $item->id) }}" class="dropdown-item"><i
                                                             class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a>
                                                 </li>
-                                                <li><a class="dropdown-item edit-item-btn"><i
+                                                <li><a href="{{ route('admin.post.edit', $item->id) }}" class="dropdown-item edit-item-btn"><i
                                                             class="ri-pencil-fill align-bottom me-2 text-muted"></i>
                                                         Edit</a></li>
                                                 <li>

@@ -40,7 +40,7 @@
                                         <div>
                                             <label for="labelInput" class="form-label">Hình ảnh</label>
                                             <input type="file" name="image" class="form-control" disabled>
-                                            <img src="{{ Storage::url($model->image) }}" alt="">
+                                            <img src="{{ Storage::url($model->image) }}" width="100px" alt="">
                                         </div>
                                     </div>
                                     <div class="col-xxl-6 col-md-6 mt-3 w-100">
@@ -63,7 +63,7 @@
                                         <div class="form-check form-switch form-switch-secondary ms-5">
                                             <input class="form-check-input" type="checkbox" role="switch" name="is_active"
                                                 @checked($model->is_active)
-                                            value="1" >
+                                            value="1" @disabled(true)>
                                             <label class="form-check-label" for="SwitchCheck2">Is active</label>
                                         </div>
                                     </div>
@@ -71,7 +71,7 @@
                                         <div class="form-check form-switch form-switch-danger ms-5">
                                             <input class="form-check-input" type="checkbox" role="switch" name="is_hot"
                                                 @checked($model->is_hot)
-                                            value="1" >
+                                            value="1" @disabled(true)>
                                             <label class="form-check-label" for="SwitchCheck2">Is hot</label>
                                         </div>
                                     </div>
@@ -79,7 +79,7 @@
                                         <div class="form-check form-switch form-switch-success ms-5">
                                             <input class="form-check-input" type="checkbox" role="switch" name="is_show_home"
                                                 @checked($model->is_show_home)
-                                            value="1" >
+                                            value="1" @disabled(true)>
                                             <label class="form-check-label" for="SwitchCheck2">Is show home</label>
                                         </div>
                                     </div>
@@ -87,7 +87,7 @@
                                         <div class="form-check form-switch form-switch-warning ms-5">
                                             <input class="form-check-input" type="checkbox" role="switch" name="is_new"
                                                 @checked($model->is_new)
-                                            value="1" >
+                                            value="1" @disabled(true)>
                                             <label class="form-check-label" for="SwitchCheck2">Is new</label>
                                         </div>
                                     </div>

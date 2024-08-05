@@ -27,3 +27,18 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="" />
     <meta property="og:updated_time" content="2020-03-15T15:40:24+06:00" />
+    <style>
+        .dropdown-item {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .dropdown-item ul {
+            flex: 1 1 20%; /* 20% width for 5 columns */
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .dropdown-item li {
+            padding: 5px 0;
+        }
+    </style>

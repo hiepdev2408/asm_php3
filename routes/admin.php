@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Middleware\IsAdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('admin')
+    ->middleware(['auth', IsAdminMiddleware::class])
     ->as('admin.')
     ->group(function(){
         Route::get('/', function(){
@@ -44,9 +46,9 @@ Route::prefix('admin')
             Route::get('create',            'create')->name('create');
             Route::get('search',            'search')->name('search');
             Route::post('store',            'store')->name('store');
-            Route::get('{id}/show',         'show')->name('show');
-            Route::get('{id}/edit',         'edit')->name('edit');
-            Route::put('{id}/update',       'update')->name('update');
-            Route::delete('{id}/destroy',   'destroy')->name('destroy');
+            Route::get('{slug}/show',         'show')->name('show');
+            Route::get('{slug}/edit',         'edit')->name('edit');
+            Route::put('{slug}/update',       'update')->name('update');
+            Route::delete('{slug}/destroy',   'destroy')->name('destroy');
         });
 });

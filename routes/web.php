@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\AutheticationController;
+use App\Http\Controllers\Client\DisplayClientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,7 +15,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('Fontend.dashboard');
-});
 
+Route::prefix('client')
+    ->as('client.')
+    ->group(function () {
+        Route::get('/', [DisplayClientController::class, 'index']);
+        Route::get('{id}/detail', [DisplayClientController::class, 'detail_new'])->name('detail');
+
+        Route::get('/loadAllPost', [DisplayClientController::class, 'loadAllPost'])->name('loadAllPost');
+        Route::get('search/{id}', [DisplayClientController::class, 'search'])->name('search');
+        Route::prefix('auth')
+            ->as('auth.')
+            ->group(function () {
+                Route::get('login', [AutheticationController::class, 'showFormLogin'])->name('login');
+                Route::post('login', [AutheticationController::class, 'login']);
+                Route::post('logout', [AutheticationController::class, 'logout'])->name('logout');
+
+                Route::get('register', [AutheticationController::class, 'showFormRegister'])->name('register');
+                Route::post('register', [AutheticationController::class, 'register']);
+            });
+    });

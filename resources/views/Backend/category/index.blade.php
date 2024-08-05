@@ -22,7 +22,6 @@
                         </div>
                         <thead>
                             <tr>
-
                                 <th data-ordering="false">ID</th>
                                 <th data-ordering="false">Tên danh mục</th>
                                 <th data-ordering="false">Danh mục</th>
@@ -74,6 +73,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    {{ $data->links()}}
                 </div>
             </div>
         </div><!--end col-->
